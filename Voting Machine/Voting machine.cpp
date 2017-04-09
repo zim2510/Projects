@@ -2,8 +2,6 @@
 
 using namespace std;
 
-map <string, int> markafill;
-map <string, int> uname;
 char winner[150];
 int mx = 0;
 int vphase = 0;
