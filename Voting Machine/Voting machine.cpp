@@ -8,6 +8,7 @@ char winner[150];
 int mx = 0;
 int vphase = 0;
 int rp = 0;
+int almt;
 
 
 
@@ -47,7 +48,7 @@ void result()
             strcpy(winner, lcandidatelist->name);
         }
     }
-    printf("THE WINNER IS: %s\n", winner);
+    printf("\nTHE WINNER IS: %s\n", winner);
 }
 
 
@@ -96,6 +97,12 @@ void addvoter(voter * lvoterlist)
     scanf(" %[^\n]", (lvoterlist->next)->name);
     printf("\nAGE: ");
     scanf("%d", &(lvoterlist->next)->age);
+    if(lvoterlist->next->age<almt){
+        printf("You're too young to be a voter.\n");
+        free(lvoterlist->next);
+        lvoterlist->next = NULL;
+        return;
+    }
     printf("\nUsername: ");
     scanf(" %s", (lvoterlist->next)->uname);
     printf("\nPassword: ");
@@ -114,6 +121,12 @@ void addcandidate(candidate * candidatelist)
     printf("\nNAME: ");
     scanf(" %[^\n]", candidatelist->next->name);
     printf("\nAGE: ");
+    if(candidatelist->next->age<almt){
+        printf("You're too young to be a voter.\n");
+        free(candidatelist->next);
+        candidatelist->next = NULL;
+        return;
+    }
     scanf("%d", &candidatelist->next->age);
     printf("\nUsername: ");
     scanf(" %s", candidatelist->next->uname);
@@ -159,6 +172,7 @@ void logadmin()
         }
 
     }
+    else printf("USERID or PASSWORD didn't match\n");
 }
 
 void logvoter(voter * lvoterlist)
@@ -313,6 +327,8 @@ int main()
 {
     candidatelist->next = NULL;
     voterlist->next = NULL;
+    printf("SET AGE LIMIT: \n");
+    scanf("%d", &almt);
 
     while(1){
         printf("--------------------------------------VOTING MACHINE------------------------------------------\n");
